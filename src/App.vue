@@ -2,22 +2,38 @@
   <div id="app">
     <div class="grid"></div>
     <template id="card-template">
-      <div class="card">
+      <div class="skeleton-loading" v-if="posts == null">
+        <div class="card" v-for="number in numbers" :key="number">
+          <div class="header">
+            <img
+              class="header-img skeleton"
+              src="https://source.unsplash.com/100x100/?nature"
+            />
+            <div class="title" data-title>
+              <div class="skeleton skeleton-text"></div>
+              <div class="skeleton skeleton-text"></div>
+            </div>
+          </div>
+          <div data-body>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+            <div class="skeleton skeleton-text"></div>
+          </div>
+        </div>
+      </div>
+      <div class="card" v-else v-for="post in posts" :key="post.key">
         <div class="header">
           <img
             class="header-img skeleton"
             src="https://source.unsplash.com/100x100/?nature"
           />
           <div class="title" data-title>
-            <div class="skeleton skeleton-text"></div>
-            <div class="skeleton skeleton-text"></div>
+            {{ post.title }}
           </div>
         </div>
         <div data-body>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text"></div>
+          {{ post.body }}
         </div>
       </div>
     </template>
@@ -32,6 +48,7 @@ export default {
   data() {
     return {
       posts: null,
+      numbers: [1, 2, 3, 4, 5, 6],
     };
   },
   mounted() {
@@ -40,16 +57,11 @@ export default {
       console.log("this.posts", this.posts);
     });
   },
-  // watch: {
-  //   posts: function () {
-  //     const grid = document.querySelector(".grid");
-  //     const cardTemplate = document.getElementById("card-template");
-  //     for (let i = 0; i < 10; i++) {
-  //       grid.append(cardTemplate.content.cloneNode(true));
-  //     }
-  //     console.log("Hello");
-  //   },
-  // },
+  watch: {
+    posts: function () {
+      console.log("Hello");
+    },
+  },
 };
 </script>
 
@@ -127,6 +139,12 @@ export default {
     text-overflow: ellipsis;
     overflow: hidden;
     flex-grow: 1;
+    text-align: left;
+  }
+  .skeleton-loading {
+    .card {
+      margin-bottom: 20px;
+    }
   }
 }
 </style>
